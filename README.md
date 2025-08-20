@@ -1,50 +1,32 @@
-# Welcome to your Expo app 👋
+# Habits App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A habit-tracker especially made for people with chronic illnesses and mental or physical illnesses or disabilities, but it can help anyone. Habits takes into account your energy and wellness levels to help you adjust your daily routines to your current needs. This app is based on self-improvement through empathy and grace rather than shame and punishment.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Daily habit tracking
+	- Input screen
+	- Completion Screen
+- Routines
+	- Group into routines
+- Energy levels
+	- Daily energy level prompt
+	- Create alternate routines for different energy levels
+	- Prompt determines default routine
+	- User always retains full power, the routine "level" can be changed regardless of energy level response
 
-   ```bash
-   npm install
-   ```
+## Pages / Plan
 
-2. Start the app
+![The main screen](readme_files/habits_main.png)
 
-   ```bash
-   npx expo start
-   ```
+![What the edit mode looks like](readme_files/habits_edit.png)
 
-In the output, you'll find options to open the app in a
+![What the energy prompt looks like](readme_files/habits_prompt.png)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Future Features
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Customize # of energy levels
+	- Add settings page
+- Gamification
+	- optional, can be turned on and off in settings
+	- Details TBD
