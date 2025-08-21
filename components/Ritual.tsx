@@ -2,7 +2,6 @@ import { View, StyleSheet, Pressable} from 'react-native';
 import { secondary, tertiary, textPrimary } from '@/utils/consts';
 import StyledText from './StyledText';
 import { Icon } from './Icon';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Task from './Task';
 
 const tasks = ["Take meds", "drink water", "make breakfast"]
@@ -26,9 +25,7 @@ export default function Ritual() {
             </View>
             
             <Pressable style={styles.icon}>
-                {/* <Icon name="pencil" color={textPrimary} style={styles.icon} size={20} /> */}
-                
-                <MaterialIcons color={textPrimary} size={24} name={"edit"} />
+                <Icon name="square.and.pencil" color={textPrimary} size={20} />
             </Pressable>
         </View>
     );
