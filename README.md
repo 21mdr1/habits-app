@@ -17,11 +17,13 @@ A habit-tracker especially made for people with chronic illnesses and mental or 
 
 ## Pages / Plan
 
-![The main screen](readme_files/habits_main.png)
+![The loadup screen](readme_files/habits_loadup_hifi.png)
 
-![What the edit mode looks like](readme_files/habits_edit.png)
+![The main screen](readme_files/habits_main_hifi.png)
 
-![What the energy prompt looks like](readme_files/habits_prompt.png)
+![What the edit mode looks like](readme_files/habits_edit_hifi.png)
+
+![What the energy prompt looks like](readme_files/habits_prompt_hifi.png)
 
 ## Future Features
 
