@@ -4,8 +4,9 @@ import StyledText from './StyledText';
 import { Icon } from './Icon';
 import Task from './Task';
 
-export default function Ritual({ data }:{
+export default function Ritual({ data, edit }:{
     data: IRitual,
+    edit: () => void,
 }) {
     return (
         <View style={styles.container}>
@@ -27,8 +28,15 @@ export default function Ritual({ data }:{
                 ))}
             </View>
             
-            <Pressable style={styles.icon}>
-                <Icon name="square.and.pencil" color={textPrimary} size={20} />
+            <Pressable 
+                style={styles.icon}
+                onPress={edit}
+            >
+                <Icon 
+                    name="square.and.pencil" 
+                    color={textPrimary} 
+                    size={20} 
+                />
             </Pressable>
         </View>
     );

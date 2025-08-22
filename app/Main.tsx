@@ -1,9 +1,10 @@
 import { View, StyleSheet } from 'react-native';
+import { RitualContext } from '@/utils/context';
 import Ritual from '@/components/Ritual';
 import Edit from '@/components/Edit';
 import { useState } from 'react';
 
-const data: IRitual[] = [
+const ogData: IRitual[] = [
     {
         name: "Morning Ritual",
         version: 2,
@@ -26,18 +27,28 @@ const data: IRitual[] = [
 ]
 
 export default function Main() {
-    const [ isEditing, setIsEditing ] = useState(false);
+    const [ editing, setEditing ] = useState(-1);
+    const [ data, setData ] = useState<IRitual[]>(ogData);
 
 
-    return <>
-        {/* Here goes the top thing */}
-        <View></View>
-        <View style={styles.ritualsContainer}>
-            {data.map(el => <Ritual key={el.name} data={el} />)}
-        </View>
+    return (
+        <RitualContext value={{data, setData}} >
+            {/* Here goes the top thing */}
+            <View></View>
 
-        {isEditing && <Edit />}
-    </>
+            <View style={styles.ritualsContainer}>
+                {data.map((el, index) => 
+                    <Ritual 
+                        key={el.name} 
+                        data={el} 
+                        edit={() => {setEditing(index)}} 
+                    />
+                )}
+            </View>
+
+            {editing > -1 && <Edit data={data[editing]} />}
+        </RitualContext>
+    );
 }
 
 const styles = StyleSheet.create({
