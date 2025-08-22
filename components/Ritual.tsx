@@ -4,8 +4,6 @@ import StyledText from './StyledText';
 import { Icon } from './Icon';
 import Task from './Task';
 
-const tasks = ["Take meds", "drink water", "make breakfast"]
-
 export default function Ritual({ data }:{
     data: IRitual,
 }) {
@@ -14,14 +12,17 @@ export default function Ritual({ data }:{
             <StyledText type="sectionHeader" style={styles.text}>{ data.name }</StyledText>
 
             <Pressable style={styles.versionContainer}>
-                <View style={styles.versionCircle}></View>
-                <View style={[styles.versionCircle, styles.versionCircleSelected]}></View>
-                <View style={styles.versionCircle}></View>
+                {[1, 2, 3].map(ver => 
+                    <View 
+                        key={ver}
+                        style={[styles.versionCircle, data.version === ver && styles.versionCircleSelected]}
+                    />
+                )}
             </Pressable>
 
             
             <View style={styles.tasks}>
-                {data.tasks.map((task, index) => (
+                {data.tasks.filter(el => el.version[data.version - 1]).map((task, index) => (
                     <Task key={index} task={task} />
                 ))}
             </View>

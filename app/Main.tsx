@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Ritual from '@/components/Ritual';
 import Edit from '@/components/Edit';
 import { useState } from 'react';
@@ -32,13 +32,16 @@ export default function Main() {
     return <>
         {/* Here goes the top thing */}
         <View></View>
-
-        {data.map(el => <Ritual key={el.name} data={el} />)
-
-        }
-
-        {/* <Ritual /> */}
+        <View style={styles.ritualsContainer}>
+            {data.map(el => <Ritual key={el.name} data={el} />)}
+        </View>
 
         {isEditing && <Edit />}
     </>
 }
+
+const styles = StyleSheet.create({
+    ritualsContainer: {
+        gap: 15,
+    }
+})
