@@ -3,12 +3,12 @@ import StyledText from './StyledText';
 import { textPrimary } from '@/utils/consts';
 
 export default function Task({ task }: {
-    task: string
+    task: ITask
 }) {
     return (
         <View style={styles.container}>
             <Pressable style={styles.checkBoxUnchecked}/>
-            <StyledText type="bodyCopy" style={styles.text}>{ task }</StyledText>
+            <StyledText type="bodyCopy" style={styles.text}>{ task.name }</StyledText>
         </View>
     );
 }

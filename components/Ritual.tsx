@@ -6,10 +6,12 @@ import Task from './Task';
 
 const tasks = ["Take meds", "drink water", "make breakfast"]
 
-export default function Ritual() {
+export default function Ritual({ data }:{
+    data: IRitual,
+}) {
     return (
         <View style={styles.container}>
-            <StyledText type="sectionHeader" style={styles.text}>Morning Ritual</StyledText>
+            <StyledText type="sectionHeader" style={styles.text}>{ data.name }</StyledText>
 
             <Pressable style={styles.versionContainer}>
                 <View style={styles.versionCircle}></View>
@@ -19,7 +21,7 @@ export default function Ritual() {
 
             
             <View style={styles.tasks}>
-                {tasks.map((task, index) => (
+                {data.tasks.map((task, index) => (
                     <Task key={index} task={task} />
                 ))}
             </View>
