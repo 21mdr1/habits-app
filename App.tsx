@@ -1,30 +1,23 @@
-// import Index from "./app/index";
 import { View, StyleSheet } from "react-native";
-import { CarroisGothicSC_400Regular, useFonts as useCarroisFonts } from '@expo-google-fonts/carrois-gothic-sc';
-import { Poppins_400Regular, Poppins_500Medium, useFonts as usePoppinsFonts } from '@expo-google-fonts/poppins';
-import { Syncopate_700Bold, useFonts as useSyncopateFonts } from '@expo-google-fonts/syncopate';
+import { CarroisGothicSC_400Regular } from '@expo-google-fonts/carrois-gothic-sc';
+import { Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins';
+import { Syncopate_700Bold } from '@expo-google-fonts/syncopate';
+import { useFonts } from "expo-font";
 import { background } from "./utils/consts";
-import Ritual from "./components/Ritual";
+import Main from "./app/Main";
 
 export default function App() {
-
-  const [ carroisLoaded ] = useCarroisFonts({
-    CarroisGothicSC_400Regular
-  });
-  const [ poppinsLoaded ] = usePoppinsFonts({
-    Poppins_400Regular, Poppins_500Medium
-  });
-  const [ syncopateLoaded ] = useSyncopateFonts({
-    Syncopate_700Bold
+  const [ loaded ] = useFonts({
+    CarroisGothicSC_400Regular, Poppins_400Regular, Poppins_500Medium, Syncopate_700Bold
   });
 
-  if (!carroisLoaded || !poppinsLoaded || !syncopateLoaded) {
+  if(!loaded) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <Ritual />
+      <Main />
     </View>
   );
 }
