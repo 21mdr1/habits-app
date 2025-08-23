@@ -5,11 +5,13 @@ import Task from './Task';
 import { useState } from 'react';
 import { primary, secondary, tertiary, textPrimary } from '@/utils/consts';
 import { Icon } from './Icon';
+import { error } from '@/utils/consts';
 
-export default function Edit({ data, saveData, cancel }:{
+export default function Edit({ data, saveData, cancel, deleteData }:{
     data: IRitual,
-    saveData: (ritual: IRitual) => void;
-    cancel: () => void;
+    saveData: (ritual: IRitual) => void,
+    cancel: () => void,
+    deleteData?: () => void,
 }) {
     const [ tempData, setTempData ] = useState(data);
 
@@ -64,14 +66,24 @@ export default function Edit({ data, saveData, cancel }:{
                 </ScrollView>
             </View>
 
-            <Pressable
-                style={({pressed}) => [styles.buttonContainer, pressed && styles.buttonContainerPressed]}
-                onPress={() => {saveData(tempData)}}
-            >
-                <StyledText type="labelsAndButtons">
-                    Save Ritual
-                </StyledText>
-            </Pressable>
+            <View style={styles.buttonsContainer}>
+                <Pressable
+                    style={({pressed}) => [styles.buttonContainer, styles.buttonContainerDelete, pressed && styles.buttonContainerDeletePressed]}
+                    onPress={deleteData}
+                >
+                    <StyledText type="labelsAndButtons">
+                        Delete Ritual
+                    </StyledText>
+                </Pressable>
+                <Pressable
+                    style={({pressed}) => [styles.buttonContainer, pressed && styles.buttonContainerPressed]}
+                    onPress={() => {saveData(tempData)}}
+                >
+                    <StyledText type="labelsAndButtons">
+                        Save Ritual
+                    </StyledText>
+                </Pressable>
+            </View>
 
         </KeyboardAvoidingView>
     );
@@ -118,6 +130,13 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
 
+
+    buttonsContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        gap: 10,
+    },
+
     buttonContainer: {
         backgroundColor: primary,
         alignSelf: "center",
@@ -126,8 +145,18 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 
+    buttonContainerDelete: {
+        borderWidth: 1,
+        borderColor: error,
+        backgroundColor: "transparent",
+    },
+
     buttonContainerPressed: {
         backgroundColor: tertiary,
+    },
+
+    buttonContainerDeletePressed: {
+        backgroundColor: error,
     },
 
 });

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { RitualContext } from '@/utils/context';
 import Ritual from '@/components/Ritual';
 import Edit from '@/components/Edit';
@@ -48,14 +48,37 @@ export default function Main() {
             {editing > -1 && 
                 <Edit 
                     data={data[editing]}  
-                    saveData={(data: IRitual) => {setData(prev => {
-                        const newArray = prev.concat([]);
-                        newArray[editing] = data;
-                        return newArray;
-                    });
+                    saveData={(data: IRitual) => {
+                        setData(prev => {
+                            const newArray = prev.concat([]);
+                            newArray[editing] = data;
+                            return newArray;
+                        });
                     setEditing(-1);
                     }}
                     cancel={() => {setEditing(-1)}}
+                    deleteData={() => {
+                        Alert.alert(
+                            "Confirmation",
+                            "Are you sure you want to delete this ritual? This action cannot be undone.",
+                            [
+                                {
+                                    text: "Cancel",
+                                    style: "cancel"
+                                },
+                                {
+                                    text: "Yes",
+                                    onPress: () => {
+                                        setData(prev => {
+                                            const newArray = prev.concat([]);
+                                            newArray.splice(editing, 1);
+                                            return newArray;
+                                        });
+                                    }
+                                }
+                            ]
+                        )
+                    }}
                 />}
         </RitualContext>
     );
