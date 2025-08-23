@@ -3,9 +3,12 @@ import StyledText from './StyledText';
 import StyledTextInput from './StyledTextInput';
 import Task from './Task';
 import { useState } from 'react';
-import { primary, secondary, tertiary, textPrimary } from '@/utils/consts';
+import { background, primary, secondary, tertiary, textPrimary } from '@/utils/consts';
 import { Icon } from './Icon';
 import { error } from '@/utils/consts';
+
+
+const blankTask: ITask = {name: "", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, false, false]}
 
 export default function Edit({ data, saveData, cancel, deleteData }:{
     data: IRitual,
@@ -63,6 +66,14 @@ export default function Edit({ data, saveData, cancel, deleteData }:{
                             updateTask={(task: ITask) => {updateTask(task, index)}}
                         /> 
                     )}
+                    <Pressable 
+                        style={({ pressed }) => [styles.addTaskContainer, pressed && styles.addTaskContainerPressed]}
+                        onPress={() => {setTempData(prev => ({ ...prev, tasks: prev.tasks.concat(blankTask) }))}}
+                    >
+                        <StyledText type="labelsAndButtons">
+                            + Add Task
+                        </StyledText>
+                    </Pressable>
                 </ScrollView>
             </View>
 
@@ -130,6 +141,17 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
 
+    addTaskContainer: {
+        borderWidth: 1,
+        borderColor: primary,
+        borderRadius: 10,
+        padding: 10,
+        marginVertical: 5,
+    },
+
+    addTaskContainerPressed: {
+        backgroundColor: primary,
+    },
 
     buttonsContainer: {
         flexDirection: "row",
