@@ -1,5 +1,6 @@
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
 import StyledText from './StyledText';
+import StyledTextInput from './StyledTextInput';
 import Task from './Task';
 import { useState } from 'react';
 import { primary, secondary, tertiary } from '@/utils/consts';
@@ -9,14 +10,23 @@ export default function Edit({ data }:{
 }) {
     const [ tempData, setTempData ] = useState(data);
 
+
+    function updateTask(task: ITask, index: number) {
+        const newTasks = tempData.tasks.concat([]);
+        newTasks[index] = task;
+        setTempData(prev => ({...prev, tasks: newTasks}));
+    }
+
+
+
     return (
-        <View style={styles.container}>
-            <StyledText 
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container} >
+            <StyledTextInput 
                 type="sectionHeader"
                 style={styles.title}
-            >
-                { tempData.name }
-            </StyledText>
+                value={ tempData.name }
+                onChangeText={(value) => setTempData(prev => ({...prev, name: value}))}
+            />
 
             <View style={styles.header_container}>
                 <StyledText type="subheader" style={styles.header_item}>Habit</StyledText>
@@ -31,7 +41,16 @@ export default function Edit({ data }:{
             </View>
             
             <View style={styles.tasksContainer}>
-                {tempData.tasks.map((el, index) => <Task task={el} key={index} mode="edit" /> )}
+                <ScrollView keyboardDismissMode='on-drag'>
+                    {tempData.tasks.map((el, index) => 
+                        <Task 
+                            task={el} 
+                            key={index} 
+                            mode="edit" 
+                            updateTask={(task: ITask) => {updateTask(task, index)}}
+                        /> 
+                    )}
+                </ScrollView>
             </View>
 
             <Pressable
@@ -43,7 +62,7 @@ export default function Edit({ data }:{
                 </StyledText>
             </Pressable>
 
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -59,6 +78,7 @@ const styles = StyleSheet.create({
     },
     title: {
         padding: 10,
+        marginBottom: 5,
     },
 
     header_container: {
@@ -79,7 +99,6 @@ const styles = StyleSheet.create({
 
     tasksContainer: {
         flexGrow: 1,
-        gap: 10,
     },
 
     buttonContainer: {

@@ -1,15 +1,16 @@
 import { View, Pressable, StyleSheet } from 'react-native';
 // import { useContext } from 'react';
 import StyledText from './StyledText';
+import StyledTextInput from './StyledTextInput';
 import { Icon } from './Icon';
 import { tertiary, textPrimary, textSecondary } from '@/utils/consts';
 import { writeTaskFreq } from '@/utils/helpers';
 // import { RitualContext } from '@/utils/context';
 
-
-export default function Task({ task, mode = 'display' }: {
+export default function Task({ task, mode = 'display', updateTask = (_: ITask) => {} }: {
     task: ITask
     mode?: 'display' | 'edit'
+    updateTask?: (task: ITask) => void,
 }) {
 
     // const { setData } = useContext(RitualContext);
@@ -29,17 +30,31 @@ export default function Task({ task, mode = 'display' }: {
 
         {mode === 'edit' && (
             <View style={styles.editContainer}>
-                <StyledText style={styles.editTaskname}>{ task.name }</StyledText>
-                <StyledText type="labelsAndButtons" style={styles.editFrequency}>
-                    { writeTaskFreq(task.frequency) }
-                </StyledText>
+                <Icon name="line.3.horizontal" color={textPrimary} size={20}/>
+
+                <StyledTextInput 
+                    style={styles.editTaskname}
+                    value={ task.name }
+                    onChangeText={(value) => updateTask({ ...task, name: value })}
+                />
+                <Pressable
+                    onPress={() => {}}
+                >
+                    <StyledText type="labelsAndButtons" style={styles.editFrequency}>
+                        { writeTaskFreq(task.frequency) }
+                    </StyledText>
+                </Pressable>
 
                 <View style={styles.editVersionContainer}>
                     {[1, 2, 3].map(ver => 
                         <Pressable 
                             key={ver}
                             style={styles.editVersionCircle}
-                            onPress={() => {}}
+                            onPress={() => {
+                                const newVersion = task.version.concat([]);
+                                newVersion[ver - 1] = !newVersion[ver - 1];
+                                updateTask({ ...task, version: newVersion })
+                            }}
                         >
                             { task.version[ver - 1] &&
                                 <Icon 
@@ -78,13 +93,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: "center",
         justifyContent: "space-between",
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        padding: 10,
         gap: 10,
+        marginVertical: 5,
     },
 
     editTaskname: {
         flexGrow: 1,
+        padding: 10,
     },
 
     editFrequency: {
