@@ -3,10 +3,13 @@ import StyledText from './StyledText';
 import StyledTextInput from './StyledTextInput';
 import Task from './Task';
 import { useState } from 'react';
-import { primary, secondary, tertiary } from '@/utils/consts';
+import { primary, secondary, tertiary, textPrimary } from '@/utils/consts';
+import { Icon } from './Icon';
 
-export default function Edit({ data }:{
+export default function Edit({ data, saveData, cancel }:{
     data: IRitual,
+    saveData: (ritual: IRitual) => void;
+    cancel: () => void;
 }) {
     const [ tempData, setTempData ] = useState(data);
 
@@ -17,16 +20,24 @@ export default function Edit({ data }:{
         setTempData(prev => ({...prev, tasks: newTasks}));
     }
 
-
-
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container} >
-            <StyledTextInput 
-                type="sectionHeader"
-                style={styles.title}
-                value={ tempData.name }
-                onChangeText={(value) => setTempData(prev => ({...prev, name: value}))}
-            />
+            <View style={styles.titleContainer}>
+                <Pressable
+                    onPress={cancel}
+                >
+                    <Icon
+                        name="arrow.left"
+                        color={textPrimary}
+                    />
+                </Pressable>
+                <StyledTextInput 
+                    type="sectionHeader"
+                    style={styles.title}
+                    value={ tempData.name }
+                    onChangeText={(value) => setTempData(prev => ({...prev, name: value}))}
+                />
+            </View>
 
             <View style={styles.header_container}>
                 <StyledText type="subheader" style={styles.header_item}>Habit</StyledText>
@@ -55,7 +66,7 @@ export default function Edit({ data }:{
 
             <Pressable
                 style={({pressed}) => [styles.buttonContainer, pressed && styles.buttonContainerPressed]}
-                onPress={() => {}}
+                onPress={() => {saveData(tempData)}}
             >
                 <StyledText type="labelsAndButtons">
                     Save Ritual
@@ -76,9 +87,15 @@ const styles = StyleSheet.create({
         height: "100%",
         padding: 15,
     },
+    titleContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 5,
+    },
     title: {
         padding: 10,
         marginBottom: 5,
+        flexGrow: 1,
     },
 
     header_container: {

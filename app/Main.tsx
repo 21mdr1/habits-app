@@ -30,7 +30,6 @@ export default function Main() {
     const [ editing, setEditing ] = useState(-1);
     const [ data, setData ] = useState<IRitual[]>(ogData);
 
-
     return (
         <RitualContext value={{data, setData}} >
             {/* Here goes the top thing */}
@@ -46,7 +45,18 @@ export default function Main() {
                 )}
             </View>
 
-            {editing > -1 && <Edit data={data[editing]} />}
+            {editing > -1 && 
+                <Edit 
+                    data={data[editing]}  
+                    saveData={(data: IRitual) => {setData(prev => {
+                        const newArray = prev.concat([]);
+                        newArray[editing] = data;
+                        return newArray;
+                    });
+                    setEditing(-1);
+                    }}
+                    cancel={() => {setEditing(-1)}}
+                />}
         </RitualContext>
     );
 }

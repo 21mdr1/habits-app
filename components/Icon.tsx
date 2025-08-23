@@ -10,6 +10,7 @@ const MAPPING = {
     'square.and.pencil': 'edit',
     'line.3.horizontal': 'drag-handle',
     'checkmark': 'check',
+    'arrow.left': 'arrow-back',
 } as IconMapping;
 
 
