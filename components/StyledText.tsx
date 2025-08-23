@@ -1,4 +1,5 @@
 import { Text, StyleSheet, type TextProps } from "react-native";
+import { textPrimary } from "@/utils/consts";
 
 export default function StyledText({ style, type='bodyCopy', ...rest }: TextProps & {
   type?: 'pageHeader' | 'sectionHeader' | 'subheader' | 'bodyCopy' | 'labelsAndButtons';
@@ -11,6 +12,7 @@ export default function StyledText({ style, type='bodyCopy', ...rest }: TextProp
                 type === 'subheader' ? styles.subheader : undefined,
                 type === 'bodyCopy' ? styles.bodyCopy : undefined,
                 type === 'labelsAndButtons' ? styles.labelsAndButtons : undefined,
+                styles.color,
                 style,
             ]}
             {...rest}
@@ -47,5 +49,8 @@ const styles = StyleSheet.create({
         fontSize: 10,
         lineHeight: 20,
         fontFamily: "CarroisGothicSC_400Regular",
+    },
+    color: {
+        color: textPrimary,
     }
 });

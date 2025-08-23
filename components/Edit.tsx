@@ -2,7 +2,7 @@ import { View, Pressable, StyleSheet } from 'react-native';
 import StyledText from './StyledText';
 import Task from './Task';
 import { useState } from 'react';
-import { secondary } from '@/utils/consts';
+import { primary, secondary, tertiary } from '@/utils/consts';
 
 export default function Edit({ data }:{
     data: IRitual,
@@ -11,17 +11,33 @@ export default function Edit({ data }:{
 
     return (
         <View style={styles.container}>
-            <StyledText type="sectionHeader">{ tempData.name }</StyledText>
+            <StyledText 
+                type="sectionHeader"
+                style={styles.title}
+            >
+                { tempData.name }
+            </StyledText>
 
-            <StyledText type="subheader">Habit</StyledText>
-            <StyledText type="subheader">Version</StyledText>
-            <StyledText type="labelsAndButtons">Low</StyledText>
-            <StyledText type="labelsAndButtons">Med</StyledText>
-            <StyledText type="labelsAndButtons">High</StyledText>
+            <View style={styles.header_container}>
+                <StyledText type="subheader" style={styles.header_item}>Habit</StyledText>
+                <View style={styles.header_item}>
+                    <StyledText type="subheader">Version</StyledText>
+                    <View style={styles.header_version_container}>
+                        <StyledText type="labelsAndButtons">Low</StyledText>
+                        <StyledText type="labelsAndButtons">Med</StyledText>
+                        <StyledText type="labelsAndButtons">High</StyledText>
+                    </View>
+                </View>
+            </View>
             
-            {tempData.tasks.map((el, index) => <Task task={el} key={index} mode="edit" /> )}
+            <View style={styles.tasksContainer}>
+                {tempData.tasks.map((el, index) => <Task task={el} key={index} mode="edit" /> )}
+            </View>
 
-            <Pressable>
+            <Pressable
+                style={({pressed}) => [styles.buttonContainer, pressed && styles.buttonContainerPressed]}
+                onPress={() => {}}
+            >
                 <StyledText type="labelsAndButtons">
                     Save Ritual
                 </StyledText>
@@ -34,5 +50,48 @@ export default function Edit({ data }:{
 const styles = StyleSheet.create({
     container: {
         backgroundColor: secondary,
-    }
+        position: "absolute",
+        top: 30,
+        left: 20,
+        width: "100%",
+        height: "100%",
+        padding: 15,
+    },
+    title: {
+        padding: 10,
+    },
+
+    header_container: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+
+    header_item: {
+        paddingHorizontal: 10,
+        alignItems: "center",
+    },
+
+    header_version_container: {
+        flexDirection: "row",
+        gap: 10,
+    },
+
+    tasksContainer: {
+        flexGrow: 1,
+        gap: 10,
+    },
+
+    buttonContainer: {
+        backgroundColor: primary,
+        alignSelf: "center",
+        paddingHorizontal: 43,
+        paddingVertical: 5,
+        borderRadius: 10,
+    },
+
+    buttonContainerPressed: {
+        backgroundColor: tertiary,
+    },
+
 });

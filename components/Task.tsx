@@ -2,7 +2,7 @@ import { View, Pressable, StyleSheet } from 'react-native';
 // import { useContext } from 'react';
 import StyledText from './StyledText';
 import { Icon } from './Icon';
-import { textPrimary } from '@/utils/consts';
+import { tertiary, textPrimary, textSecondary } from '@/utils/consts';
 import { writeTaskFreq } from '@/utils/helpers';
 // import { RitualContext } from '@/utils/context';
 
@@ -21,20 +21,20 @@ export default function Task({ task, mode = 'display' }: {
                     style={styles.displayCheckBoxUnchecked}
                     onPress={() => {}}
                 />
-                <StyledText type="bodyCopy" style={styles.displayText}>
+                <StyledText type="bodyCopy">
                     { task.name }
                 </StyledText>
             </View>
         )}
 
         {mode === 'edit' && (
-            <View>
-                <StyledText>{ task.name }</StyledText>
-                <StyledText type="labelsAndButtons">
+            <View style={styles.editContainer}>
+                <StyledText style={styles.editTaskname}>{ task.name }</StyledText>
+                <StyledText type="labelsAndButtons" style={styles.editFrequency}>
                     { writeTaskFreq(task.frequency) }
                 </StyledText>
 
-                <View>
+                <View style={styles.editVersionContainer}>
                     {[1, 2, 3].map(ver => 
                         <Pressable 
                             key={ver}
@@ -45,8 +45,8 @@ export default function Task({ task, mode = 'display' }: {
                                 <Icon 
                                     style={styles.editVersionCircleSelected}
                                     name="checkmark" 
-                                    color="black" 
-                                    size={ 15 } 
+                                    color={ textPrimary }
+                                    size={ 17 } 
                                 />  
                             }
                         </Pressable>
@@ -70,13 +70,34 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: textPrimary,
     },
-    displayText: {
-        color: textPrimary,
+
+    editContainer: {
+        flexDirection: "row",
+        borderWidth: 1,
+        borderColor: tertiary,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        gap: 10,
     },
 
+    editTaskname: {
+        flexGrow: 1,
+    },
+
+    editFrequency: {
+        color: textSecondary,
+    },
+
+    editVersionContainer: {
+        flexDirection: "row",
+        gap: 15,
+    },
     editVersionCircle: {
-        width: 13,
-        height: 13,
+        width: 15,
+        height: 15,
         borderRadius: 100,
         borderWidth: 1,
         borderColor: textPrimary,

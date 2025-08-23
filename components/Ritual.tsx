@@ -10,7 +10,7 @@ export default function Ritual({ data, edit }:{
 }) {
     return (
         <View style={styles.container}>
-            <StyledText type="sectionHeader" style={styles.text}>{ data.name }</StyledText>
+            <StyledText type="sectionHeader">{ data.name }</StyledText>
 
             <Pressable style={styles.versionContainer}>
                 {[1, 2, 3].map(ver => 
@@ -53,9 +53,6 @@ const styles = StyleSheet.create({
     tasks: {
         paddingTop: 10,
         gap: 8,
-    },
-    text: {
-        color: textPrimary,
     },
     icon: {
         position: "absolute",
