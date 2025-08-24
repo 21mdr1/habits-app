@@ -1,7 +1,9 @@
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, Pressable } from 'react-native';
 import { RitualContext } from '@/utils/context';
 import Ritual from '@/components/Ritual';
 import Edit from '@/components/Edit';
+import StyledText from '@/components/StyledText';
+import { primary } from '@/utils/consts';
 import { useState } from 'react';
 
 const ogData: IRitual[] = [
@@ -25,6 +27,12 @@ const ogData: IRitual[] = [
         ]
     }
 ]
+
+const blankRitual: IRitual = {
+    name: '',
+    version: 1,
+    tasks: []
+}
 
 export default function Main() {
     const [ editing, setEditing ] = useState(-1);
@@ -50,6 +58,18 @@ export default function Main() {
                         }}
                     />
                 )}
+                <Pressable
+                    style={styles.ritualsAddButton}
+                    onPress={() => {
+                        const len = data.length;
+                        setData(prev => prev.concat(blankRitual));
+                        setEditing(len);
+                    }}
+                >
+                    <StyledText type="labelsAndButtons">
+                        + Add Ritual
+                    </StyledText>
+                </Pressable>
             </View>
 
             {editing > -1 && 
@@ -81,6 +101,7 @@ export default function Main() {
                                             newArray.splice(editing, 1);
                                             return newArray;
                                         });
+                                        setEditing(-1);
                                     }
                                 }
                             ]
@@ -94,5 +115,12 @@ export default function Main() {
 const styles = StyleSheet.create({
     ritualsContainer: {
         gap: 15,
+    },
+    ritualsAddButton: {
+        backgroundColor: primary,
+        borderRadius: 10,
+        alignSelf: "center",
+        paddingHorizontal: 43,
+        paddingVertical: 5,
     }
 })
