@@ -3,10 +3,9 @@ import StyledText from './StyledText';
 import StyledTextInput from './StyledTextInput';
 import Task from './Task';
 import { useState } from 'react';
-import { background, primary, secondary, tertiary, textPrimary } from '@/utils/consts';
+import { primary, secondary, tertiary, textPrimary } from '@/utils/consts';
 import { Icon } from './Icon';
 import { error } from '@/utils/consts';
-
 
 const blankTask: ITask = {name: "", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, false, false]}
 
@@ -64,6 +63,7 @@ export default function Edit({ data, saveData, cancel, deleteData }:{
                             key={index} 
                             mode="edit" 
                             updateTask={(task: ITask) => {updateTask(task, index)}}
+                            deleteTask={() => setTempData(prev => ({...prev, tasks: prev.tasks.filter((_, ind) => ind !== index)}))}
                         /> 
                     )}
                     <Pressable 

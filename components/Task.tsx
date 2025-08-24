@@ -1,9 +1,9 @@
-import { View, Pressable, StyleSheet, Dimensions } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import StyledText from './StyledText';
 import StyledTextInput from './StyledTextInput';
 import { Icon } from './Icon';
-import { tertiary, textPrimary, textSecondary } from '@/utils/consts';
+import { error, tertiary, textPrimary, textSecondary } from '@/utils/consts';
 import { writeTaskFreq } from '@/utils/helpers';
 import { primary, altTertiary } from '@/utils/consts';
 
@@ -49,13 +49,15 @@ function EditFrequency({ frequency, updateFrequency }: {
 } 
 
 
-export default function Task({ task, mode = 'display', updateTask = (_: ITask) => {} }: {
+export default function Task({ task, mode = 'display', updateTask = (_: ITask) => {}, deleteTask = () => {} }: {
     task: ITask
     mode?: 'display' | 'edit'
-    updateTask: (task: ITask) => void,
+    updateTask?: (task: ITask) => void,
+    deleteTask?: () => void
 }) {
     const [ fontSize, setFontSize ] = useState<number>(13);
     const [ isEditingFreq, setIsEditingFreq ] = useState(false);
+    const [ showDeleteOption, setShowDeleteOption ] = useState(false);
 
     return (<>
         { mode === "display" && (
@@ -80,51 +82,68 @@ export default function Task({ task, mode = 'display', updateTask = (_: ITask) =
         )}
 
         {mode === 'edit' && (
-            <View style={styles.editContainer}>
-                <Icon name="line.3.horizontal" color={textPrimary} size={20}/>
+            <View
+                style={[styles.editDeleteContainer, showDeleteOption && styles.editContainerSide]}
+            >
+                <View style={styles.editContainer}>
+                    <Pressable
+                        onPress={() => {setShowDeleteOption(prev => !prev)}}
+                    >
+                        <Icon name="line.3.horizontal" color={textPrimary} size={20}/>
+                    </Pressable>
 
-                <StyledTextInput 
-                    style={[styles.editTaskname, { fontSize }]}
-                    value={ task.name }
-                    onChangeText={(value) => {
-                        if (task.name.length > value.length && value.length < 12) {
-                            fontSize <= 13 && setFontSize(Math.ceil(fontSize * 1.1));
-                        } else if (task.name.length < value.length && value.length > 8) {
-                            fontSize >= 8 && setFontSize(Math.ceil(fontSize / 1.1));
-                        }
-                        updateTask({ ...task, name: value });
-                    }}
-                />
-                <Pressable
-                    onPress={() => {setIsEditingFreq(true)}}
-                >
-                    <StyledText type="labelsAndButtons" style={styles.editFrequency}>
-                        { writeTaskFreq(task.frequency) }
-                    </StyledText>
-                </Pressable>
-
-                <View style={styles.editVersionContainer}>
-                    {[1, 2, 3].map(ver => 
-                        <Pressable 
-                            key={ver}
-                            style={styles.editVersionCircle}
-                            onPress={() => {
-                                const newVersion = task.version.concat([]);
-                                newVersion[ver - 1] = !newVersion[ver - 1];
-                                updateTask({ ...task, version: newVersion })
-                            }}
-                        >
-                            { task.version[ver - 1] &&
-                                <Icon 
-                                    style={styles.editVersionCircleSelected}
-                                    name="checkmark" 
-                                    color={ textPrimary }
-                                    size={ 17 } 
-                                />  
+                    <StyledTextInput 
+                        style={[styles.editTaskname, { fontSize }]}
+                        value={ task.name }
+                        onChangeText={(value) => {
+                            if (task.name.length > value.length && value.length < 12) {
+                                fontSize <= 13 && setFontSize(Math.ceil(fontSize * 1.1));
+                            } else if (task.name.length < value.length && value.length > 8) {
+                                fontSize >= 8 && setFontSize(Math.ceil(fontSize / 1.1));
                             }
-                        </Pressable>
-                    )}
+                            updateTask({ ...task, name: value });
+                        }}
+                    />
+                    <Pressable
+                        onPress={() => {setIsEditingFreq(true)}}
+                    >
+                        <StyledText type="labelsAndButtons" style={styles.editFrequency}>
+                            { writeTaskFreq(task.frequency) }
+                        </StyledText>
+                    </Pressable>
+
+                    <View style={styles.editVersionContainer}>
+                        {[1, 2, 3].map(ver => 
+                            <Pressable 
+                                key={ver}
+                                style={styles.editVersionCircle}
+                                onPress={() => {
+                                    const newVersion = task.version.concat([]);
+                                    newVersion[ver - 1] = !newVersion[ver - 1];
+                                    updateTask({ ...task, version: newVersion })
+                                }}
+                            >
+                                { task.version[ver - 1] &&
+                                    <Icon 
+                                        style={styles.editVersionCircleSelected}
+                                        name="checkmark" 
+                                        color={ textPrimary }
+                                        size={ 17 } 
+                                    />  
+                                }
+                            </Pressable>
+                        )}
+                    </View>
                 </View>
+                {showDeleteOption &&
+                    <Pressable
+                        style={styles.editDeleteButton}
+                        onPress={deleteTask}
+                    >
+                        <StyledText type="labelsAndButtons" style={styles.editDeleteText}>Delete</StyledText>
+                    </Pressable>
+                }
+                
             </View>
         )}
 
@@ -157,6 +176,7 @@ const styles = StyleSheet.create({
     },
 
     editContainer: {
+        flexGrow: 1,
         flexDirection: "row",
         borderWidth: 1,
         borderColor: tertiary,
@@ -228,6 +248,26 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: -2,
         left: -1,
+    },
+
+    editDeleteContainer: {
+        flexDirection: "row",
+        gap: 3,
+    },
+
+    editContainerSide: {
+        position: "relative",
+        left: -20,
+    },
+    editDeleteButton: {
+        backgroundColor: error,
+        borderRadius: 10,
+        marginVertical: 5,
+        padding: 13,
+        justifyContent: "center",
+    },
+    editDeleteText: {
+        color: "white",
     }
 
 });
