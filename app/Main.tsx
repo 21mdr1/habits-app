@@ -1,9 +1,8 @@
-import { View, StyleSheet, Alert, Pressable } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { RitualContext } from '@/utils/context';
 import Ritual from '@/components/Ritual';
 import Edit from '@/components/Edit';
-import StyledText from '@/components/StyledText';
-import { primary } from '@/utils/consts';
+import StyledButton from '@/components/Styled/StyledButton';
 import { useState } from 'react';
 
 const ogData: IRitual[] = [
@@ -58,18 +57,15 @@ export default function Main() {
                         }}
                     />
                 )}
-                <Pressable
-                    style={styles.ritualsAddButton}
+
+                <StyledButton 
                     onPress={() => {
                         const len = data.length;
                         setData(prev => prev.concat(blankRitual));
                         setEditing(len);
                     }}
-                >
-                    <StyledText type="labelsAndButtons">
-                        + Add Ritual
-                    </StyledText>
-                </Pressable>
+                    text="+ Add Ritual"
+                />
             </View>
 
             {editing > -1 && 
@@ -116,11 +112,4 @@ const styles = StyleSheet.create({
     ritualsContainer: {
         gap: 15,
     },
-    ritualsAddButton: {
-        backgroundColor: primary,
-        borderRadius: 10,
-        alignSelf: "center",
-        paddingHorizontal: 43,
-        paddingVertical: 5,
-    }
 })

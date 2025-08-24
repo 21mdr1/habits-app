@@ -1,7 +1,7 @@
 import { View, Pressable, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import StyledText from './StyledText';
-import StyledTextInput from './StyledTextInput';
+import StyledText from './Styled/StyledText';
+import StyledTextInput from './Styled/StyledTextInput';
 import { Icon } from './Icon';
 import { error, tertiary, textPrimary, textSecondary } from '@/utils/consts';
 import { writeTaskFreq } from '@/utils/helpers';

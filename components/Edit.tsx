@@ -1,11 +1,11 @@
 import { View, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
-import StyledText from './StyledText';
-import StyledTextInput from './StyledTextInput';
+import StyledText from './Styled/StyledText';
+import StyledTextInput from './Styled/StyledTextInput';
+import StyledButton from './Styled/StyledButton';
 import Task from './Task';
 import { useState } from 'react';
-import { primary, secondary, tertiary, textPrimary } from '@/utils/consts';
+import { primary, secondary, textPrimary } from '@/utils/consts';
 import { Icon } from './Icon';
-import { error } from '@/utils/consts';
 
 const blankTask: ITask = {name: "", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, false, false]}
 
@@ -78,22 +78,15 @@ export default function Edit({ data, saveData, cancel, deleteData }:{
             </View>
 
             <View style={styles.buttonsContainer}>
-                <Pressable
-                    style={({pressed}) => [styles.buttonContainer, styles.buttonContainerDelete, pressed && styles.buttonContainerDeletePressed]}
+                <StyledButton 
+                    type='delete'
                     onPress={deleteData}
-                >
-                    <StyledText type="labelsAndButtons">
-                        Delete Ritual
-                    </StyledText>
-                </Pressable>
-                <Pressable
-                    style={({pressed}) => [styles.buttonContainer, pressed && styles.buttonContainerPressed]}
+                    text='Delete Ritual'
+                />
+                <StyledButton 
                     onPress={() => {saveData(tempData)}}
-                >
-                    <StyledText type="labelsAndButtons">
-                        Save Ritual
-                    </StyledText>
-                </Pressable>
+                    text='Save Ritual'
+                />
             </View>
 
         </KeyboardAvoidingView>
@@ -159,27 +152,4 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         gap: 10,
     },
-
-    buttonContainer: {
-        backgroundColor: primary,
-        alignSelf: "center",
-        paddingHorizontal: 43,
-        paddingVertical: 5,
-        borderRadius: 10,
-    },
-
-    buttonContainerDelete: {
-        borderWidth: 1,
-        borderColor: error,
-        backgroundColor: "transparent",
-    },
-
-    buttonContainerPressed: {
-        backgroundColor: tertiary,
-    },
-
-    buttonContainerDeletePressed: {
-        backgroundColor: error,
-    },
-
 });

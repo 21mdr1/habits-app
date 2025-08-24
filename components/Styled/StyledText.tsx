@@ -7,7 +7,7 @@ export default function StyledText({ style, type='bodyCopy', ...rest }: TextProp
     return (
         <Text
             style={[
-                type === 'pageHeader' &&textStyles.pageHeader,
+                type === 'pageHeader' && textStyles.pageHeader,
                 type === 'sectionHeader' && textStyles.sectionHeader,
                 type === 'subheader' && textStyles.subheader,
                 type === 'bodyCopy' && textStyles.bodyCopy,
