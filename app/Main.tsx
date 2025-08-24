@@ -41,6 +41,13 @@ export default function Main() {
                         key={el.name} 
                         data={el} 
                         edit={() => {setEditing(index)}} 
+                        udpateTasks={(taskArr: ITask[]) => {
+                            setData(prev => {
+                                const newArray = prev.concat([]);
+                                newArray[index].tasks = taskArr;
+                                return newArray;
+                            });
+                        }}
                     />
                 )}
             </View>

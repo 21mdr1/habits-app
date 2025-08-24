@@ -4,9 +4,10 @@ import StyledText from './StyledText';
 import { Icon } from './Icon';
 import Task from './Task';
 
-export default function Ritual({ data, edit }:{
+export default function Ritual({ data, edit, udpateTasks }:{
     data: IRitual,
     edit: () => void,
+    udpateTasks: (taskArr: ITask[]) => void,
 }) {
     return (
         <View style={styles.container}>
@@ -24,7 +25,11 @@ export default function Ritual({ data, edit }:{
             
             <View style={styles.tasks}>
                 {data.tasks.filter(el => el.version[data.version - 1]).map((task, index) => (
-                    <Task key={index} task={task} />
+                    <Task key={index} task={task} updateTask={(task) => {
+                        const newArr = data.tasks.concat([]);
+                        newArr[data.tasks.findIndex(el => el.name === task.name)] = task;
+                        udpateTasks(newArr);
+                    }} />
                 ))}
             </View>
             

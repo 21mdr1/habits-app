@@ -32,7 +32,7 @@ function EditFrequency({ frequency, updateFrequency }: {
                             <Icon 
                                 name="checkmark"
                                 color={textSecondary}
-                                size={17}
+                                size={24}
                             />
                         }
                     </Pressable>
@@ -52,7 +52,7 @@ function EditFrequency({ frequency, updateFrequency }: {
 export default function Task({ task, mode = 'display', updateTask = (_: ITask) => {} }: {
     task: ITask
     mode?: 'display' | 'edit'
-    updateTask?: (task: ITask) => void,
+    updateTask: (task: ITask) => void,
 }) {
     const [ fontSize, setFontSize ] = useState<number>(13);
     const [ isEditingFreq, setIsEditingFreq ] = useState(false);
@@ -62,8 +62,17 @@ export default function Task({ task, mode = 'display', updateTask = (_: ITask) =
             <View style={styles.displayContainer}>
                 <Pressable 
                     style={styles.displayCheckBoxUnchecked}
-                    onPress={() => {}}
-                />
+                    onPress={() => {updateTask({...task, completed: !task.completed})}}
+                >
+                    { task.completed &&
+                        <Icon 
+                            style={styles.displayCheck}
+                            name="checkmark" 
+                            color={ textPrimary }
+                            size={ 17 } 
+                        />  
+                    }
+                </Pressable>
                 <StyledText type="bodyCopy">
                     { task.name }
                 </StyledText>
@@ -140,6 +149,11 @@ const styles = StyleSheet.create({
         height: 13,
         borderWidth: 1,
         borderColor: textPrimary,
+    },
+    displayCheck: {
+        position: "absolute",
+        top: -5,
+        left: -1,
     },
 
     editContainer: {

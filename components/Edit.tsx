@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         padding: 15,
+        borderRadius: 10,
     },
     titleContainer: {
         flexDirection: "row",
