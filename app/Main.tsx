@@ -3,6 +3,7 @@ import { RitualContext } from '@/utils/context';
 import Ritual from '@/components/Ritual';
 import Edit from '@/components/Edit';
 import StyledButton from '@/components/Styled/StyledButton';
+import ProgressBar from '@/components/ProgressBar';
 import { useState } from 'react';
 
 const ogData: IRitual[] = [
@@ -39,8 +40,7 @@ export default function Main() {
 
     return (
         <RitualContext value={{data, setData}} >
-            {/* Here goes the top thing */}
-            <View></View>
+            <ProgressBar />
 
             <View style={styles.ritualsContainer}>
                 {data.map((el, index) => 
