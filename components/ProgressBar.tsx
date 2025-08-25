@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     barFull: {
         backgroundColor: textPrimary,
         height: "100%",
-        // width: "50%",
         borderRadius: 5,
     },
 });

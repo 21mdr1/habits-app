@@ -1,3 +1,5 @@
+import { Alert } from "react-native"
+
 export function writeTaskFreq(freq: number[]) {
     const days = [ "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat" ]
 
@@ -10,4 +12,20 @@ export function writeTaskFreq(freq: number[]) {
     }
 
     return "( " + freq.map(el => days[el]).join(", ") + " )"
+}
+export function sendDeleteAlert(name: string, onConfirm: () => void) {
+    Alert.alert(
+        "Confirmation",
+        `Are you sure you want to delete this ${name}? This action cannot be undone.`,
+        [
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Yes",
+                onPress: onConfirm
+            }
+        ]
+    )
 }

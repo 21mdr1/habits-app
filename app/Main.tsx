@@ -1,10 +1,12 @@
-import { View, StyleSheet, Alert } from 'react-native';
-import { RitualContext } from '@/utils/context';
-import Ritual from '@/components/Ritual';
-import Edit from '@/components/Edit';
-import StyledButton from '@/components/Styled/StyledButton';
-import ProgressBar from '@/components/ProgressBar';
+import { FlatList, StyleSheet } from 'react-native';
 import { useState } from 'react';
+import { RitualContext } from '@/utils/context';
+import ProgressBar from '@/components/ProgressBar';
+import Ritual from '@/components/Ritual';
+import StyledButton from '@/components/Styled/StyledButton';
+import Edit from '@/components/Edit';
+import { blankRitual } from '@/utils/consts';
+import { sendDeleteAlert } from '@/utils/helpers';
 
 const ogData: IRitual[] = [
     {
@@ -28,12 +30,6 @@ const ogData: IRitual[] = [
     }
 ]
 
-const blankRitual: IRitual = {
-    name: '',
-    version: 1,
-    tasks: []
-}
-
 export default function Main() {
     const [ editing, setEditing ] = useState(-1);
     const [ data, setData ] = useState<IRitual[]>(ogData);
@@ -42,31 +38,34 @@ export default function Main() {
         <RitualContext value={{data, setData}} >
             <ProgressBar />
 
-            <View style={styles.ritualsContainer}>
-                {data.map((el, index) => 
+            <FlatList 
+                contentContainerStyle={styles.ritualsContainer}
+                data={data}
+                renderItem={({item, index}) => 
                     <Ritual 
-                        key={el.name} 
-                        data={el} 
-                        edit={() => {setEditing(index)}} 
-                        udpateTasks={(taskArr: ITask[]) => {
+                        data={item} 
+                        edit={() => setEditing(index)}
+                        udpateTasks={(taskArr: ITask[]) =>
                             setData(prev => {
                                 const newArray = prev.concat([]);
                                 newArray[index].tasks = taskArr;
                                 return newArray;
-                            });
-                        }}
+                            })
+                        }
                     />
-                )}
-
-                <StyledButton 
-                    onPress={() => {
-                        const len = data.length;
-                        setData(prev => prev.concat(blankRitual));
-                        setEditing(len);
-                    }}
-                    text="+ Add Ritual"
-                />
-            </View>
+                }
+                ListFooterComponent={
+                    <StyledButton 
+                        onPress={() => {
+                            const len = data.length;
+                            setData(prev => prev.concat(blankRitual));
+                            setEditing(len);
+                        }}
+                        text="+ Add Ritual"
+                    />
+                }
+            />
+            
 
             {editing > -1 && 
                 <Edit 
@@ -77,33 +76,21 @@ export default function Main() {
                             newArray[editing] = data;
                             return newArray;
                         });
-                    setEditing(-1);
+                        setEditing(-1);
                     }}
-                    cancel={() => {setEditing(-1)}}
-                    deleteData={() => {
-                        Alert.alert(
-                            "Confirmation",
-                            "Are you sure you want to delete this ritual? This action cannot be undone.",
-                            [
-                                {
-                                    text: "Cancel",
-                                    style: "cancel"
-                                },
-                                {
-                                    text: "Yes",
-                                    onPress: () => {
-                                        setData(prev => {
-                                            const newArray = prev.concat([]);
-                                            newArray.splice(editing, 1);
-                                            return newArray;
-                                        });
-                                        setEditing(-1);
-                                    }
-                                }
-                            ]
-                        )
-                    }}
-                />}
+                    cancel={() => setEditing(-1)}
+                    deleteData={() => 
+                        sendDeleteAlert("ritual", () => {
+                            setData(prev => {
+                                const newArray = prev.concat([]);
+                                newArray.splice(editing, 1);
+                                return newArray;
+                            });
+                            setEditing(-1);
+                        })
+                    }
+                />
+            }
         </RitualContext>
     );
 }

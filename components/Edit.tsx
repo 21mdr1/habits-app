@@ -1,13 +1,8 @@
 import { View, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
-import StyledText from './Styled/StyledText';
-import StyledTextInput from './Styled/StyledTextInput';
-import StyledButton from './Styled/StyledButton';
+import { StyledTextInput, StyledText, StyledButton, Icon } from './Styled/StyledComponents';
 import Task from './Task/Task';
 import { useState } from 'react';
-import { primary, secondary, textPrimary } from '@/utils/consts';
-import { Icon } from './Styled/Icon';
-
-const blankTask: ITask = {name: "", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, false, false]}
+import { primary, secondary, textPrimary, blankTask } from '@/utils/consts';
 
 export default function Edit({ data, saveData, cancel, deleteData }:{
     data: IRitual,
