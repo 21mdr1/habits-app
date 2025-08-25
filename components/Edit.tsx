@@ -2,7 +2,7 @@ import { View, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet
 import StyledText from './Styled/StyledText';
 import StyledTextInput from './Styled/StyledTextInput';
 import StyledButton from './Styled/StyledButton';
-import Task from './Task';
+import Task from './Task/Task';
 import { useState } from 'react';
 import { primary, secondary, textPrimary } from '@/utils/consts';
 import { Icon } from './Styled/Icon';

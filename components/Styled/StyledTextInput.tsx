@@ -1,5 +1,5 @@
 import { TextInput, StyleSheet, type TextInputProps } from "react-native";
-import { primary, textPrimary } from "@/utils/consts";
+import { primary } from "@/utils/consts";
 import { textStyles } from "@/utils/styles";
 
 export default function StyledTextInput({ style, type="bodyCopy", ...rest }: TextInputProps & {
