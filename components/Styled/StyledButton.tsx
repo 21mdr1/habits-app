@@ -1,10 +1,12 @@
-import { Pressable, StyleSheet, type PressableProps, type StyleProp, type ViewStyle } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import type { PressableProps, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import StyledText from "./StyledText";
 import { error, primary, tertiary } from "@/utils/consts";
 
-export default function StyledButton({ style, pressedStyle, type='primary', text='', ...rest }: PressableProps & {
+export default function StyledButton({ style, pressedStyle, textStyle, type='primary', text='', ...rest }: PressableProps & {
     style?: StyleProp<ViewStyle>,
     pressedStyle?: StyleProp<ViewStyle>,
+    textStyle?: StyleProp<TextStyle>,
     type?: 'primary' | 'delete';
     text?: string;
 }) {
@@ -23,7 +25,7 @@ export default function StyledButton({ style, pressedStyle, type='primary', text
                 ]}
             {...rest}
         >
-            <StyledText type="labelsAndButtons">
+            <StyledText type="labelsAndButtons" style={textStyle}>
                 { text }
             </StyledText>
         </Pressable>

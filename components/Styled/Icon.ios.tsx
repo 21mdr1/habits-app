@@ -1,10 +1,11 @@
 import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
 import { StyleProp, ViewStyle } from 'react-native';
+import { textPrimary } from '@/utils/consts';
 
-export function Icon({ name, size = 24, color, style, weight = 'regular'}: {
+export function Icon({ name, size = 24, color = textPrimary, style, weight = 'regular'}: {
     name: SymbolViewProps['name'],
     size?: number,
-    color: string,
+    color?: string,
     style?: StyleProp<ViewStyle>,
     weight?: SymbolWeight
 }) {

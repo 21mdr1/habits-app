@@ -5,7 +5,7 @@ import StyledButton from './Styled/StyledButton';
 import Task from './Task';
 import { useState } from 'react';
 import { primary, secondary, textPrimary } from '@/utils/consts';
-import { Icon } from './Icon';
+import { Icon } from './Styled/Icon';
 
 const blankTask: ITask = {name: "", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, false, false]}
 
