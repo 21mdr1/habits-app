@@ -1,6 +1,5 @@
 import { View, Pressable, StyleSheet } from "react-native";
-import StyledText from "../Styled/StyledText";
-import { Icon } from "../Styled/Icon";
+import { StyledText, Icon } from '../Styled/StyledComponents';
 import { textPrimary } from "@/utils/consts";
 
 export default function DisplayTask({ task, update }: {
