@@ -40,8 +40,7 @@ export default function Main() {
                             setData(prev => prev.concat(blankRitual));
                             setEditing(len);
                         }}
-                        text="+ Add Ritual"
-                    />
+                    >+ Add Ritual</StyledButton>
                 }
             />
             

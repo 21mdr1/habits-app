@@ -1,14 +1,13 @@
 import { Pressable, StyleSheet } from "react-native";
-import type { PressableProps, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import type { PressableProps, TextProps, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import StyledText from "./StyledText";
 import { error, primary, tertiary } from "@/utils/consts";
 
-export default function StyledButton({ style, pressedStyle, textStyle, type='primary', text='', ...rest }: PressableProps & {
+export default function StyledButton({ children, style, pressedStyle, textStyle, type='primary', ...rest }: PressableProps & TextProps & {
     style?: StyleProp<ViewStyle>,
     pressedStyle?: StyleProp<ViewStyle>,
     textStyle?: StyleProp<TextStyle>,
     type?: 'primary' | 'delete';
-    text?: string;
 }) {
     return (
         <Pressable 
@@ -26,7 +25,7 @@ export default function StyledButton({ style, pressedStyle, textStyle, type='pri
             {...rest}
         >
             <StyledText type="labelsAndButtons" style={textStyle}>
-                { text }
+                { children }
             </StyledText>
         </Pressable>
     );

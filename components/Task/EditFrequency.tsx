@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { StyledText, StyledButton, Icon, Modal } from '../Styled/StyledComponents';
+import { StyledText, StyledButton, Icon, StyledModal } from '../Styled/StyledComponents';
 import { altTertiary, tertiary, textSecondary } from '@/utils/consts';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -12,7 +12,7 @@ export default function EditFrequency({ freq, update }: {
     const [ tempFreq, setTempFreq ] = useState(freq);
 
     return (
-        <Modal style={styles.modal}>
+        <StyledModal style={styles.modal}>
             {days.map((day, ind) => (
                 <Pressable
                     key={day}
@@ -34,9 +34,10 @@ export default function EditFrequency({ freq, update }: {
 
             <StyledButton 
                 onPress={() => update(tempFreq)}
-                text="Save Frequency"
-            />
-        </Modal>
+            >
+                Save Frequency
+            </StyledButton>
+        </StyledModal>
     );
 }
 

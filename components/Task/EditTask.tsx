@@ -38,8 +38,9 @@ export default function EditTask({ task, update, del }:{
                     style={styles.freqButton}
                     textStyle={styles.freq}
                     onPress={() => setEditFrequency(true)}
-                    text={ writeTaskFreq(task.frequency) }
-                />
+                >
+                    { writeTaskFreq(task.frequency) }
+                </StyledButton>
 
                 <View
                     style={styles.versions}
@@ -72,8 +73,9 @@ export default function EditTask({ task, update, del }:{
                     style={styles.deleteButton}
                     onPress={del}
                     textStyle={styles.deleteText}
-                    text='Delete'
-                />
+                >
+                    Delete
+                </StyledButton>
             )}
         </View>
 

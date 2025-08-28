@@ -76,12 +76,10 @@ export default function Edit({ data, saveData, cancel, deleteData }:{
                 <StyledButton 
                     type='delete'
                     onPress={deleteData}
-                    text='Delete Ritual'
-                />
+                >Delete Ritual</StyledButton>
                 <StyledButton 
                     onPress={() => {saveData(tempData)}}
-                    text='Save Ritual'
-                />
+                >Save Ritual</StyledButton>
             </View>
 
         </KeyboardAvoidingView>
