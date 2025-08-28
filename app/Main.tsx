@@ -7,6 +7,7 @@ import StyledButton from '@/components/Styled/StyledButton';
 import Edit from '@/components/Edit';
 import { blankRitual } from '@/utils/consts';
 import { sendDeleteAlert } from '@/utils/helpers';
+import Prompt from '@/components/Prompt';
 
 const ogData: IRitual[] = [
     {
@@ -66,6 +67,7 @@ export default function Main() {
                 }
             />
             
+            <Prompt />
 
             {editing > -1 && 
                 <Edit 

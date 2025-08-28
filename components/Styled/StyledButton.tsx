@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
 
     primaryPressed: {
         backgroundColor: tertiary,
+        borderColor: tertiary,
     },
     
     deletePressed: {
