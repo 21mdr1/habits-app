@@ -1,7 +1,7 @@
 import { View, Modal, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import type { ViewProps } from 'react-native';
-import { background } from '@/utils/consts';
+import { secondary } from '@/utils/consts';
 
 export default function StyledModal({ children, style, overlayColor, ...rest }: ViewProps & {
     overlayColor?: string,
@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
     },
 
     modal: {
-        backgroundColor: background,
+        backgroundColor: secondary,
         width: "100%",
         padding: 15,
         borderRadius: 10,
+        gap: 10,
     },
 });

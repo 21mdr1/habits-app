@@ -32,6 +32,7 @@ const ogData: IRitual[] = [
 ]
 
 export default function App() {
+  const [ data, setData ] = useState<IRitual[]>(ogData);
   const [ loaded ] = useFonts({
     CarroisGothicSC_400Regular, Poppins_400Regular, Poppins_500Medium, Syncopate_700Bold
   });
@@ -39,8 +40,6 @@ export default function App() {
   if(!loaded) {
     return null;
   }
-
-  const [ data, setData ] = useState<IRitual[]>(ogData);
 
   return (
     <GestureHandlerRootView style={styles.container}>
