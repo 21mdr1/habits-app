@@ -15,7 +15,7 @@ const MAPPING = {
 } as IconMapping;
 
 
-export function Icon({ name, size = 24, color = textPrimary, style}: {
+export default function Icon({ name, size = 24, color = textPrimary, style}: {
     name: IconSymbolName,
     size?: number,
     color?: string | OpaqueColorValue,

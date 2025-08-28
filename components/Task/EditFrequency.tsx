@@ -1,6 +1,6 @@
-import { View, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { StyledText, StyledButton, Icon } from '../Styled/StyledComponents';
+import { StyledText, StyledButton, Icon, Modal } from '../Styled/StyledComponents';
 import { altTertiary, tertiary, textSecondary } from '@/utils/consts';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -12,53 +12,37 @@ export default function EditFrequency({ freq, update }: {
     const [ tempFreq, setTempFreq ] = useState(freq);
 
     return (
-        <View style={styles.overlay}>
-            <View style={styles.container}>
-                {days.map((day, ind) => (
-                    <Pressable
-                        key={day}
-                        style={styles.day}
-                        onPress={() => setTempFreq(prev => 
-                            prev.includes(ind) ? prev.filter(el => el !== ind) : prev.concat([ind])
-                        )}
-                    >
-                        <StyledText>{ `Every ${day} ` }</StyledText>
-                        {tempFreq.includes(ind) && 
-                            <Icon 
-                                name="checkmark"
-                                color={textSecondary}
-                                size={17}
-                            />
-                        } 
-                    </Pressable>
-                ))}
+        <Modal style={styles.modal}>
+            {days.map((day, ind) => (
+                <Pressable
+                    key={day}
+                    style={styles.day}
+                    onPress={() => setTempFreq(prev => 
+                        prev.includes(ind) ? prev.filter(el => el !== ind) : prev.concat([ind])
+                    )}
+                >
+                    <StyledText>{ `Every ${day} ` }</StyledText>
+                    {tempFreq.includes(ind) && 
+                        <Icon 
+                            name="checkmark"
+                            color={textSecondary}
+                            size={17}
+                        />
+                    } 
+                </Pressable>
+            ))}
 
-                <StyledButton 
-                    onPress={() => update(tempFreq)}
-                    text="Save Frequency"
-                />
-            </View>
-        </View>
+            <StyledButton 
+                onPress={() => update(tempFreq)}
+                text="Save Frequency"
+            />
+        </Modal>
     );
 }
 
 const styles = StyleSheet.create({
-    overlay: {
-        position: "absolute",
-        inset: 0,
-        zIndex: 99,
-
-        padding: 15,
-
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    container: {
+    modal: {
         backgroundColor: altTertiary,
-        width: "100%",
-        padding: 15,
-        borderRadius: 10,
     },
 
     day: {

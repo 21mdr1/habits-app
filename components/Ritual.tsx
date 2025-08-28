@@ -1,7 +1,6 @@
 import { View, StyleSheet, Pressable} from 'react-native';
 import { secondary, tertiary, textPrimary } from '@/utils/consts';
-import StyledText from './Styled/StyledText';
-import { Icon } from './Styled/Icon';
+import { StyledText, Icon } from './Styled/StyledComponents'
 import Task from './Task/Task';
 
 export default function Ritual({ data, edit, udpateTasks }:{
