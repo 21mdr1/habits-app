@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet } from 'react-native';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { RitualContext } from '@/utils/context';
 import ProgressBar from '@/components/ProgressBar';
 import Ritual from '@/components/Ritual';
@@ -9,34 +9,12 @@ import { blankRitual } from '@/utils/consts';
 import { sendDeleteAlert } from '@/utils/helpers';
 import Prompt from '@/components/Prompt';
 
-const ogData: IRitual[] = [
-    {
-        name: "Morning Ritual",
-        version: 2,
-        tasks: [
-            {name: "Take meds", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [true, true, true]},
-            {name: "Drink water", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [true, true, true]},
-            {name: "Shower", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, false, true]},
-            {name: "Make breakfast", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, true, true]},
-            {name: "Go to the gym", completed: false, frequency: [3, 5], version: [false, false, true]},
-        ],
-    },
-    {
-        name: "Afternoon Ritual",
-        version: 2,
-        tasks: [
-            {name: "Take a nap", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [true, true, true]},
-            {name: "Read", completed: false, frequency: [0, 1, 2, 3, 4, 5, 6], version: [false, true, true]},
-        ]
-    }
-]
-
 export default function Main() {
     const [ editing, setEditing ] = useState(-1);
-    const [ data, setData ] = useState<IRitual[]>(ogData);
+    const { data, setData } = useContext(RitualContext);
 
     return (
-        <RitualContext value={{data, setData}} >
+        <>
             <ProgressBar />
 
             <FlatList 
@@ -93,7 +71,7 @@ export default function Main() {
                     }
                 />
             }
-        </RitualContext>
+        </>
     );
 }
 

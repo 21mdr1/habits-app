@@ -1,6 +1,11 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 
-export const RitualContext = createContext({
-    data: [] as IRitual[],
-    setData: (_: IRitual[]) => {}
+interface IRitualContext {
+    data: IRitual[],
+    setData: Dispatch<SetStateAction<IRitual[]>>,
+}
+
+export const RitualContext = createContext<IRitualContext>({
+    data: [],
+    setData: () => {},
 });
