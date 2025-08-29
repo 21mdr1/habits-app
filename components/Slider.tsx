@@ -1,12 +1,11 @@
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
-import Animated, { useSharedValue, useAnimatedStyle, type SharedValue } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle } from "react-native-reanimated";
 import { background, primary, tertiary, textPrimary } from "@/utils/consts";
 
-export default function Slider({ step }: {
-    step: SharedValue<0 | 2 | 1>;
-}) {
+export default function Slider() {
+    const step = useSharedValue<0 | 1 | 2>(0);
     const steps = [.1, .5, .9]
     const [ sliderWidth, setSliderWidth ] = useState(0);
 

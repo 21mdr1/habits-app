@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, Text, StyleSheet } from 'react-native';
 import { useContext, useState } from 'react';
 import { RitualContext } from '@/utils/context';
 import ProgressBar from '@/components/ProgressBar';
@@ -17,7 +17,7 @@ export default function Main() {
         <>
             <ProgressBar />
 
-            <FlatList 
+            {/* <FlatList 
                 contentContainerStyle={styles.ritualsContainer}
                 data={data}
                 renderItem={({item, index}) => 
@@ -42,9 +42,9 @@ export default function Main() {
                         }}
                     >+ Add Ritual</StyledButton>
                 }
-            />
+            /> */}
             
-            <Prompt />
+            {/* <Prompt /> */}
 
             {editing > -1 && 
                 <Edit 
