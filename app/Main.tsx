@@ -41,6 +41,7 @@ export default function Main() {
                 renderItem={({item, index}) => 
                     <Ritual 
                         data={item} 
+                        index={index}
                         edit={() => setEditing(index)}
                         udpateTasks={(taskArr: ITask[]) =>
                             setData(prev => {

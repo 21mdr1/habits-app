@@ -2,17 +2,30 @@ import { View, StyleSheet, Pressable} from 'react-native';
 import { secondary, tertiary, textPrimary } from '@/utils/consts';
 import { StyledText, Icon } from './Styled/StyledComponents'
 import Task from './Task/Task';
+import { useContext } from 'react';
+import { RitualContext } from '@/utils/context';
 
-export default function Ritual({ data, edit, udpateTasks }:{
+export default function Ritual({ data, edit, udpateTasks, index }:{
     data: IRitual,
     edit: () => void,
     udpateTasks: (taskArr: ITask[]) => void,
+    index: number,
 }) {
+
+    const { setData } = useContext(RitualContext);
+
     return (
         <View style={styles.container}>
             <StyledText type="sectionHeader">{ data.name }</StyledText>
 
-            <Pressable style={styles.versionContainer}>
+            <Pressable 
+                style={styles.versionContainer}
+                onPress={() => {setData(prev => {
+                    const newArr = prev.concat([]);
+                    newArr[index].version = newArr[index].version === 3 ?  1 : newArr[index].version + 1 as 1 | 2 | 3;
+                    return newArr;
+                })}}
+            >
                 {[1, 2, 3].map(ver => 
                     <View 
                         key={ver}
