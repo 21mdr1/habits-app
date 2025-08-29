@@ -5,8 +5,9 @@ import { StyledTextInput, StyledButton, Icon } from '../Styled/StyledComponents'
 import { writeTaskFreq } from "@/utils/helpers";
 import { error, tertiary, textPrimary, textSecondary } from "@/utils/consts";
 
-export default function EditTask({ task, update, del }:{
+export default function EditTask({ task, index, update, del }:{
     task: ITask,
+    index: number,
     update: (task: ITask) => void,
     del: () => void,
 }) {

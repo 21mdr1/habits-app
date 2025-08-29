@@ -2,8 +2,9 @@ import { View, Pressable, StyleSheet } from "react-native";
 import { StyledText, Icon } from "../Styled/StyledComponents";
 import { textPrimary } from "@/utils/consts";
 
-export default function DisplayTask({ task, update }: {
+export default function DisplayTask({ task, index, update }: {
     task: ITask,
+    index: number,
     update: (task: ITask) => void,
 }) {
 

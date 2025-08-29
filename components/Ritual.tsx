@@ -34,7 +34,7 @@ export default function Ritual({ edit, index }:{
             
             <View style={styles.tasks}>
                 {ritual.tasks.filter(el => el.version[ritual.version - 1]).map((task, taskIndex) => (
-                    <Task key={taskIndex} task={task} updateTask={(task) => {
+                    <Task key={taskIndex} index={taskIndex} task={task} updateTask={(task) => {
                         setData(prev => 
                             prev.with(index, {...prev[index], tasks: ritual.tasks.map(el => 
                                 el.name === task.name ? task : el

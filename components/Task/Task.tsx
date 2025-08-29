@@ -1,17 +1,19 @@
 import DisplayTask from './DisplayTask';
 import EditTask from './EditTask';
 
-export default function Task({ task, mode = 'display', updateTask, deleteTask = () => {} }: {
-    task: ITask
-    mode?: 'display' | 'edit'
+export default function Task({ task, index, mode = 'display', updateTask, deleteTask = () => {} }: {
+    index: number,
+    task: ITask,
+    mode?: 'display' | 'edit',
     updateTask: (task: ITask) => void,
-    deleteTask?: () => void
+    deleteTask?: () => void,
 }) {
 
     return (<>
         { mode === "display" && 
             <DisplayTask 
                 task={task} 
+                index={index}
                 update={updateTask}
             />
         }
@@ -19,6 +21,7 @@ export default function Task({ task, mode = 'display', updateTask, deleteTask = 
         {mode === 'edit' && 
             <EditTask 
                 task={task}
+                index={index}
                 update={updateTask}
                 del={deleteTask}
             />
