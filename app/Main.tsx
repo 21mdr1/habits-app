@@ -38,18 +38,10 @@ export default function Main() {
             <FlatList 
                 contentContainerStyle={styles.ritualsContainer}
                 data={data}
-                renderItem={({item, index}) => 
-                    <Ritual 
-                        data={item} 
+                renderItem={({index}) => 
+                    <Ritual
                         index={index}
                         edit={() => setEditing(index)}
-                        udpateTasks={(taskArr: ITask[]) =>
-                            setData(prev => {
-                                const newArray = prev.concat([]);
-                                newArray[index].tasks = taskArr;
-                                return newArray;
-                            })
-                        }
                     />
                 }
                 ListFooterComponent={

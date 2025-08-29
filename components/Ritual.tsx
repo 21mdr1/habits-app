@@ -1,46 +1,45 @@
 import { View, StyleSheet, Pressable} from 'react-native';
 import { secondary, tertiary, textPrimary } from '@/utils/consts';
 import { StyledText, Icon } from './Styled/StyledComponents'
-import Task from './Task/Task';
 import { useContext } from 'react';
 import { RitualContext } from '@/utils/context';
+import Task from './Task/Task';
 
-export default function Ritual({ data, edit, udpateTasks, index }:{
-    data: IRitual,
+export default function Ritual({ edit, index }:{
     edit: () => void,
-    udpateTasks: (taskArr: ITask[]) => void,
     index: number,
 }) {
 
-    const { setData } = useContext(RitualContext);
+    const { data, setData } = useContext(RitualContext);
+    const ritual = data[index];
 
     return (
         <View style={styles.container}>
-            <StyledText type="sectionHeader">{ data.name }</StyledText>
+            <StyledText type="sectionHeader">{ ritual.name }</StyledText>
 
             <Pressable 
                 style={styles.versionContainer}
-                onPress={() => {setData(prev => {
-                    const newArr = prev.concat([]);
-                    newArr[index].version = newArr[index].version === 3 ?  1 : newArr[index].version + 1 as 1 | 2 | 3;
-                    return newArr;
-                })}}
+                onPress={() => {setData(prev => 
+                    prev.with(index, { ...ritual, version: ritual.version === 3 ? 1 : ritual.version + 1 as 1 | 2 | 3 })
+                )}}
             >
                 {[1, 2, 3].map(ver => 
                     <View 
                         key={ver}
-                        style={[styles.versionCircle, data.version === ver && styles.versionCircleSelected]}
+                        style={[styles.versionCircle, ritual.version === ver && styles.versionCircleSelected]}
                     />
                 )}
             </Pressable>
 
             
             <View style={styles.tasks}>
-                {data.tasks.filter(el => el.version[data.version - 1]).map((task, index) => (
-                    <Task key={index} task={task} updateTask={(task) => {
-                        const newArr = data.tasks.concat([]);
-                        newArr[data.tasks.findIndex(el => el.name === task.name)] = task;
-                        udpateTasks(newArr);
+                {ritual.tasks.filter(el => el.version[ritual.version - 1]).map((task, taskIndex) => (
+                    <Task key={taskIndex} task={task} updateTask={(task) => {
+                        setData(prev => 
+                            prev.with(index, {...prev[index], tasks: ritual.tasks.map(el => 
+                                el.name === task.name ? task : el
+                            )})
+                        )
                     }} />
                 ))}
             </View>
