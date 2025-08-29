@@ -17,20 +17,7 @@ export default function Main() {
         <>
             <ProgressBar />
 
-            <Ritual 
-                data={data[0]} 
-                edit={() => setEditing(0)}
-                udpateTasks={(taskArr: ITask[]) =>
-                    setData(prev => {
-                        const newArray = prev.concat([]);
-                        newArray[0].tasks = taskArr;
-                        return newArray;
-                    })
-                }
-            />
-            
-
-            {/* <FlatList 
+            <FlatList 
                 contentContainerStyle={styles.ritualsContainer}
                 data={data}
                 renderItem={({item, index}) => 
@@ -55,9 +42,9 @@ export default function Main() {
                         }}
                     >+ Add Ritual</StyledButton>
                 }
-            /> */}
+            />
             
-            {/* <Prompt /> */}
+            <Prompt />
 
             {editing > -1 && 
                 <Edit 
