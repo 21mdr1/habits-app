@@ -5,15 +5,17 @@ import Slider from '@react-native-community/slider';
 import { useContext, useMemo, useState } from "react";
 import { RitualContext } from '@/utils/context';
 
-export default function Prompt() {
+export default function Prompt({ visible, setVisible }: {
+    visible: boolean,
+    setVisible: (_: boolean) => void,
+}) {
     const { setData } = useContext(RitualContext);
     const [ sliderWidth, setSliderWidth ] = useState(0);
-    const [ isVisible, setIsVisible ] = useState(true);
     const [ value, setValue ] = useState(0);
     const widths: DimensionValue[] = useMemo(() => [ 17 - 8 , sliderWidth / 2 - 8, sliderWidth - 17 - 8 ], [sliderWidth])
 
     return (
-        <StyledModal visible={isVisible}>
+        <StyledModal visible={visible}>
             <StyledText type="sectionHeader">
                 How do you feel today?
             </StyledText>
@@ -36,7 +38,7 @@ export default function Prompt() {
             <StyledButton
                 onPress={() => {
                     setData(prev => prev.map(ritual => ({...ritual, version: value + 1 as 1 | 2 | 3})));
-                    setIsVisible(false);
+                    setVisible(false);
                 }}
             >
                 Submit

@@ -1,4 +1,5 @@
-import { Alert } from "react-native"
+import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function writeTaskFreq(freq: number[]) {
     const days = [ "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat" ]
@@ -13,6 +14,7 @@ export function writeTaskFreq(freq: number[]) {
 
     return "( " + freq.map(el => days[el]).join(", ") + " )"
 }
+
 export function sendDeleteAlert(name: string, onConfirm: () => void) {
     Alert.alert(
         "Confirmation",
@@ -28,4 +30,30 @@ export function sendDeleteAlert(name: string, onConfirm: () => void) {
             }
         ]
     )
+}
+
+export async function shouldTriggerDailyPrompt() {
+    let lastExecution;
+
+    try {
+        lastExecution = await AsyncStorage.getItem('dailyExecution');
+    } catch (error) {
+        console.log("Error retrieving last execution time", error);
+    }
+    
+    const now = new Date()
+    const today = now.toDateString();
+
+    if (!lastExecution || new Date(lastExecution).toDateString() !== today) {
+        try {
+            await AsyncStorage.setItem('dailyExecution', now.toISOString())
+        } catch (error) {
+            console.log("Error setting last execution time", error);
+        }
+
+        return true;
+    }
+
+    return false;
+
 }
