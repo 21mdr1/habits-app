@@ -1,9 +1,9 @@
 import { View, Modal, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import type { ViewProps } from 'react-native';
+import type { ModalProps } from 'react-native';
 import { secondary } from '@/utils/consts';
 
-export default function StyledModal({ children, style, overlayColor, ...rest }: ViewProps & {
+export default function StyledModal({ children, style, overlayColor, ...rest }: ModalProps & {
     overlayColor?: string,
 }) {
     return (
