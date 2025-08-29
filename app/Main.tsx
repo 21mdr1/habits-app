@@ -1,4 +1,4 @@
-import { FlatList, Text, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { useContext, useState } from 'react';
 import { RitualContext } from '@/utils/context';
 import ProgressBar from '@/components/ProgressBar';
@@ -16,6 +16,19 @@ export default function Main() {
     return (
         <>
             <ProgressBar />
+
+            <Ritual 
+                data={data[0]} 
+                edit={() => setEditing(0)}
+                udpateTasks={(taskArr: ITask[]) =>
+                    setData(prev => {
+                        const newArray = prev.concat([]);
+                        newArray[0].tasks = taskArr;
+                        return newArray;
+                    })
+                }
+            />
+            
 
             {/* <FlatList 
                 contentContainerStyle={styles.ritualsContainer}
