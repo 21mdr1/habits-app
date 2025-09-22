@@ -1,6 +1,6 @@
 import { View, Pressable, StyleSheet } from "react-native";
 import { StyledText, Icon } from "../Styled/StyledComponents";
-import { textPrimary } from "@/utils/consts";
+import { textPrimary, backgroundSecondary } from "@/utils/consts";
 
 export default function DisplayTask({ task, index, update }: {
     task: ITask,
@@ -32,6 +32,10 @@ export default function DisplayTask({ task, index, update }: {
 
 const styles = StyleSheet.create({
     container: {
+        borderColor: "#F3E6D7",
+        backgroundColor: backgroundSecondary,
+        borderWidth: 3,
+        borderRadius: 30,
         flexDirection: "row",
         alignItems: "center",
         gap: 10,

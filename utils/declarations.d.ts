@@ -1,5 +1,7 @@
 declare interface ITask {
     name: string, 
+    description?: string,
+    emoji?: string,
     completed: boolean, 
     frequency: number[], 
     version: boolean[],
