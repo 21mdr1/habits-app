@@ -1,10 +1,9 @@
 import { View, Pressable, StyleSheet } from "react-native";
 import { StyledText, Icon } from "../Styled/StyledComponents";
-import { textPrimary, backgroundSecondary } from "@/utils/consts";
+import { primary, primaryVariant, primaryHighlight, primaryHighlightVariant } from "@/utils/consts";
 
-export default function DisplayTask({ task, index, update }: {
+export default function DisplayTask({ task, update }: {
     task: ITask,
-    index: number,
     update: (task: ITask) => void,
 }) {
 
@@ -13,18 +12,22 @@ export default function DisplayTask({ task, index, update }: {
             style={styles.container}
             onPress={() => update({...task, completed: !task.completed})}
         >
-            <View
-                style={styles.checkBox}
-            >
-                {task.completed &&
-                    <Icon 
-                        style={styles.check}
-                        name="checkmark"
-                        size={17}
-                    />
-                }
+            <View style={styles.text}>
+                <StyledText type="sectionHeader">{ task.name }</StyledText>
+                <StyledText>{ task.description }</StyledText>
             </View>
-            <StyledText>{ task.name }</StyledText>
+            <View
+                style={[
+                    styles.checkBox, 
+                    task.completed && {backgroundColor: primary} 
+                ]}
+            >
+                <Icon 
+                    color={primary}
+                    name="checkmark"
+                    size={13}
+                />
+            </View>
         </Pressable>
     )
 
@@ -32,25 +35,27 @@ export default function DisplayTask({ task, index, update }: {
 
 const styles = StyleSheet.create({
     container: {
-        borderColor: "#F3E6D7",
-        backgroundColor: backgroundSecondary,
+        borderColor: primaryVariant,
+        backgroundColor: 'transparent',
         borderWidth: 3,
-        borderRadius: 30,
+        borderRadius: 15,
         flexDirection: "row",
         alignItems: "center",
-        gap: 10,
+        gap: 16,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+    },
+    text: {
+        flexGrow: 1,
     },
     checkBox: {
         borderRadius: 100,
-        width: 13,
-        height: 13,
+        width: 25,
+        height: 25,
         borderWidth: 1,
-        borderColor: textPrimary,
-    },
-
-    check: {
-        position: "absolute",
-        top: -5,
-        left: -1,
+        borderColor: primaryHighlightVariant,
+        backgroundColor: primaryHighlight,
+        justifyContent: "center",
+        alignItems: "center",
     },
 });

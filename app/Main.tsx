@@ -1,92 +1,48 @@
-import { FlatList, StyleSheet, AppState } from 'react-native';
-import { useContext, useState, useRef, useEffect } from 'react';
-import { RitualContext } from '@/utils/context';
-import ProgressBar from '@/components/ProgressBar';
-import Ritual from '@/components/Ritual';
-import StyledButton from '@/components/Styled/StyledButton';
-import Edit from '@/components/Edit';
-import { blankRitual } from '@/utils/consts';
-import { sendDeleteAlert, shouldTriggerDailyPrompt } from '@/utils/helpers';
-import Prompt from '@/components/Prompt';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { useContext } from 'react';
+import { TaskContext } from '@/utils/context';
+import StyledText from '@/components/Styled/StyledText';
+import DisplayTask from '@/components/Task/DisplayTask';
 
 export default function Main() {
-    const appState = useRef(AppState.currentState);
-    const [ editing, setEditing ] = useState(-1);
-    const { data, setData } = useContext(RitualContext);
-    const [ triggerPrompt, setTriggerPrompt ] = useState(false);
-
-    useEffect(() => {
-        const listener = AppState.addEventListener('change', async nextAppState => {
-            if (
-                appState.current.match(/inactive|background/) && 
-                nextAppState === 'active' && 
-                await shouldTriggerDailyPrompt()
-            ) {
-                setTriggerPrompt(true);
-            }
-
-            appState.current = nextAppState;
-        });
-
-        return () => listener.remove();
-    }, []);
+    const { data, setData } = useContext(TaskContext);
     
     return (
         <>
-            <ProgressBar />
+            <View style={styles.container}>
+                <StyledText 
+                    type='pageHeader' 
+                    color='secondary'
+                    style={{textAlign: 'center'}}
+                >
+                    Habits
+                </StyledText>
+                <StyledText 
+                    type='subheader' 
+                    color='secondary'
+                    style={{textAlign: 'center'}}
+                >
+                    Change your routine based on your energy level
+                </StyledText>
+            </View>
 
             <FlatList 
-                contentContainerStyle={styles.ritualsContainer}
+                contentContainerStyle={styles.container}
                 data={data}
-                renderItem={({index}) => 
-                    <Ritual
-                        index={index}
-                        edit={() => setEditing(index)}
+                renderItem={({item, index}) => 
+                    <DisplayTask 
+                        key={index} 
+                        task={item} 
+                        update={task => setData(prev => prev.with(index, task))}
                     />
                 }
-                ListFooterComponent={
-                    <StyledButton 
-                        onPress={() => {
-                            const len = data.length;
-                            setData(prev => prev.concat(blankRitual));
-                            setEditing(len);
-                        }}
-                    >+ Add Ritual</StyledButton>
-                }
             />
-            
-            <Prompt visible={triggerPrompt} setVisible={setTriggerPrompt}/>
-
-            {editing > -1 && 
-                <Edit 
-                    data={data[editing]}  
-                    saveData={(data: IRitual) => {
-                        setData(prev => {
-                            const newArray = prev.concat([]);
-                            newArray[editing] = data;
-                            return newArray;
-                        });
-                        setEditing(-1);
-                    }}
-                    cancel={() => setEditing(-1)}
-                    deleteData={() => 
-                        sendDeleteAlert("ritual", () => {
-                            setData(prev => {
-                                const newArray = prev.concat([]);
-                                newArray.splice(editing, 1);
-                                return newArray;
-                            });
-                            setEditing(-1);
-                        })
-                    }
-                />
-            }
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    ritualsContainer: {
-        gap: 15,
+    container: {
+        gap: 8,
     },
 })

@@ -31,29 +31,3 @@ export function sendDeleteAlert(name: string, onConfirm: () => void) {
         ]
     )
 }
-
-export async function shouldTriggerDailyPrompt() {
-    let lastExecution;
-
-    try {
-        lastExecution = await AsyncStorage.getItem('dailyExecution');
-    } catch (error) {
-        console.log("Error retrieving last execution time", error);
-    }
-    
-    const now = new Date()
-    const today = now.toDateString();
-
-    if (!lastExecution || new Date(lastExecution).toDateString() !== today) {
-        try {
-            await AsyncStorage.setItem('dailyExecution', now.toISOString())
-        } catch (error) {
-            console.log("Error setting last execution time", error);
-        }
-
-        return true;
-    }
-
-    return false;
-
-}
